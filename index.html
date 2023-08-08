@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Google Maps API Example</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+    <script>
+      function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 36.408233272729746, lng: 140.35342743534463 },
+          zoom: 20,
+          mapTypeId: google.maps.MapTypeId.SATELLITE
+        });
+
+        // Update the list points here to show on the maps.
+        const points = [
+            { lat: 36.40825445236362, lng: 140.3528147857511 },
+            { lat: 36.408253372240765, lng: 140.3530196445842 },
+            { lat: 36.40825229176803, lng: 140.35322450341167 },
+            { lat: 36.40825121436827, lng: 140.35342901162116 },
+            { lat: 36.408236511640624, lng: 140.35281319346765 },
+            { lat: 36.408235431240826, lng: 140.3530180522512 },
+            { lat: 36.40823435049115, lng: 140.35322291102906 },
+            { lat: 36.408233272729746, lng: 140.35342743534463 },
+            { lat: 36.40821857091761, lng: 140.35281160118492 },
+            { lat: 36.408217490240894, lng: 140.35301645991893 },
+            { lat: 36.40821640921429, lng: 140.3532213186472 },
+            { lat: 36.408215331091206, lng: 140.35342585906886 },
+            { lat: 36.40820156507774, lng: 140.35281009187443 },
+            { lat: 36.40820030497306, lng: 140.3530149489807 },
+            { lat: 36.408199044518504, lng: 140.35321980608035 },
+            { lat: 36.40819778741302, lng: 140.35342431775524 }
+        ];
+
+        points.forEach((point) => {
+          new google.maps.Marker({
+            position: point,
+            map: map,
+            title: `Lat: ${point.lat}, Lng: ${point.lng}`,
+          });
+        });
+      }
+    </script>
+  </head>
+  <body onload="initMap()">
+    <div id="map" style="height: 800px; width: 100%"></div>
+  </body>
+</html>

@@ -1,21 +1,41 @@
-const geolib = require('geolib');
+const helper = require('./helper');
 
-const pointA = { latitude: 36.408184528499255, longitude: 140.35281391591622 };
-const pointB = { latitude: 36.408182369833256, longitude: 140.3532229528019 };
+const pointA = [36.40825445236362, 140.3528147857511];
+const pointB = [36.40825121436827, 140.35342901162116];
+const pointC = [36.40819778741302, 140.35342431775524];
+const pointD = [36.40820156507774, 140.35281009187443];
+const numRows = 3;
+const numCols = 3;
 
-// Calculate the distance from A to B
-const distanceAB = geolib.getDistance(pointA, pointB);
+const coordinates = helper.calculateCoordinates(pointA, pointB, pointC, pointD, numRows, numCols);
 
-// Calculate the distances from A to C, C to D, and D to B
-const distanceAC = distanceAB / 3;
+const result = [];
+for (let col = 0; col < numCols; col++) {
+    for (let row = 0; row < numRows; row++) {
+        result.push(
+            {
+                array_name: 'Array Name',
+                top_left_lat: coordinates[row][col].latitude,
+                top_left_long: coordinates[row][col].longitude,
+                top_right_lat: coordinates[row][col+1].latitude,
+                top_right_long: coordinates[row][col+1].longitude,
+                bottom_left_lat: coordinates[row+1][col].latitude,
+                bottom_left_long: coordinates[row+1][col].longitude,
+                bottom_right_lat: coordinates[row+1][col+1].latitude,
+                bottom_right_long: coordinates[row+1][col+1].longitude,
+            }
+        );
+    }
+}
 
-// Calculate the coordinates of points C and D
-const bearingAB = geolib.getRhumbLineBearing(pointA, pointB);
+// console.log(result);
 
-const pointC = geolib.computeDestinationPoint(pointA, distanceAC, bearingAB);
-const pointD = geolib.computeDestinationPoint(pointA, 2 * distanceAC, bearingAB);
+// Write to CSV file
+helper.writeCSV(result, 'coordinates.csv');
 
-console.log("Point C Latitude:", pointC.latitude);
-console.log("Point C Longitude:", pointC.longitude);
-console.log("Point D Latitude:", pointD.latitude);
-console.log("Point D Longitude:", pointD.longitude);
+// get list points with coordinates to verify on the maps
+const listPoints = helper.listPoints(coordinates);
+// This is the list of points with coordinates to verify on the maps
+console.log('Copy the list point below to index.html to see the list of points in the google maps')
+console.log(listPoints);
+console.log('\n');
